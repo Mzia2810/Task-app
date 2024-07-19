@@ -267,7 +267,7 @@ const dataArray = Object.keys(data).map(item => ({item,value:data[item]}))
           keyExtractor={item => item.item}
         />
       </View> : <View style={styles.FlatlistContainer}>
-        <FlatList
+        {/* <FlatList
           data={checkedArray ? checkedArray : null}
           // onEndReachedThreshold={1}
           // onEndReached={handleEndReach}
@@ -276,7 +276,7 @@ const dataArray = Object.keys(data).map(item => ({item,value:data[item]}))
           // refreshing={refreshing}
           renderItem={({ item }) => <Item checked={checked} setChecked={() => { setChecked(!checked) }} item={item} />}
           keyExtractor={item => item.item}
-        />
+        /> */}
     
       </View> }
       

@@ -6,6 +6,7 @@ import { persistStore,persistReducer, } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import gallerySlice from "./gallerySlice";
 
 const persistConfig = {
     key: 'root',
@@ -13,6 +14,7 @@ const persistConfig = {
 }
 const rootReducer = combineReducers({
     visit: visitSlice,
+    gallery:gallerySlice,
 })
 
 const persistedReducer = persistReducer(persistConfig,rootReducer)
@@ -22,7 +24,8 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck:{
             ignoreActions:['persist/PERSIST', 'persist/REHYDRATE'],
-        }
+            serializableCheck:false,
+        },
     }),
 
 });
