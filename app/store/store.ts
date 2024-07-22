@@ -5,8 +5,10 @@ import visitSlice from "./visitSlice";
 import { persistStore,persistReducer, } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "@reduxjs/toolkit";
+import thunk from 'redux-thunk';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import gallerySlice from "./gallerySlice";
+import ImagesSlice from "./ImagesSlice";
 
 const persistConfig = {
     key: 'root',
@@ -15,6 +17,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     visit: visitSlice,
     gallery:gallerySlice,
+    images:ImagesSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig,rootReducer)

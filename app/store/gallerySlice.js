@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as GalleryImagePicker from "expo-image-picker";
-
+// Image picker
 export const fetchGalleryImages = createAsyncThunk(
   "gallery/fetchImages",
   async (_, thunkAPI) => {
@@ -16,14 +16,20 @@ export const fetchGalleryImages = createAsyncThunk(
   }
 );
 
+
+
+
 const gallerySlice = createSlice({
   name: "gallery",
   initialState: {
-    imageData: [],
+    images: [],
+    imageData:[],
     status: "idle",
     error: null,
   },
-  reducer: {},
+  reducer: {
+
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchGalleryImages.pending,(state) =>{
         state.state = 'loading'

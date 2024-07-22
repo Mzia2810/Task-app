@@ -10,9 +10,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Checkbox from 'expo-checkbox';
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "react-native-screens";
+import Item from "./component/Item";
 
 const DATA = [
   {
@@ -134,17 +134,12 @@ const DATA = [
 const TaskOne = () => {
   const [data, setData] = useState([])
   const [onLoading, setOnLoading] = useState(false)
-  // const [onRefresh, setOnRefresh] = useState(false)
   const [onPage, setOnPage] = useState(1)
   const [refreshing, setRefreshing] = useState(false);
-
   const [activeButton ,setActiveButton] = useState('Draft')
   const [text, setText] = useState('')
-  const [checked, setChecked] = useState(false);
-  const [checkedItems, setCheckedItems] = useState({});
-  const [checkedArray, setCheckedArray] = useState([]);
+ 
 
-  console.log('checked array items : ',checkedArray)
 
   useEffect(() => {
     fetchData()
@@ -153,8 +148,7 @@ const TaskOne = () => {
 
 const dataArray = Object.keys(data).map(item => ({item,value:data[item]}))
   const fetchData = async (onRefresh = false) => {
-    if (onLoading)
-      return;
+    if (onLoading) return;
     setOnLoading(true);
     const newPage = onRefresh ? 1 : onPage;
     const postdata = { practice_id: '17' }
@@ -163,7 +157,7 @@ const dataArray = Object.keys(data).map(item => ({item,value:data[item]}))
         method: "POST",
         headers: {
           'content-type': 'application/json',
-          'authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxMjQ3MDMxLCJpYXQiOjE3MjEyMTgyMzEsImp0aSI6ImNkMDRjMDUyZGZjODQ3YjU5NmIwM2I2MDBkNDkzOTQ0IiwidXNlcl9pZCI6MTYxfQ.J_FB4xV2HJ9Lxxna6H0RlFe56ZmyQjlt8RsL3Gj8u5M"
+          'authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNDE2NzA1LCJpYXQiOjE3MjEzODc5MDUsImp0aSI6ImYzYmQ5N2IzN2MyMTQxMDk4NTJhMmE4OWRlOWJhN2JmIiwidXNlcl9pZCI6MTYxfQ.DuIgL75NNbD1hUk9YEbMeYE4Y-fBjCsmcqq4nfqFRMM"
         },
         body: JSON.stringify(postdata)
       })
@@ -192,48 +186,9 @@ const dataArray = Object.keys(data).map(item => ({item,value:data[item]}))
     }
   }
 
-  const handleCheckboxChange = (item) =>{
-    // console.log('this is new item Id  : ',item)
-    const newCheckedState = !checkedItems[item.id]
-    // console.log('My new state is :   : ',newCheckedState)
-    
-    setCheckedItems(prevState => ({
-      ...prevState,
-      [item.id] : newCheckedState
-    }))
-    if(newCheckedState) {
-      setCheckedArray(preItem => [...preItem,item])
-      // console.log('Here I am going  to check items addding : ',checkedArray)
-    }else {
-      // setCheckedArray(preItem => preItem.filter(i => i.id !== item.id));
-    }
-  }
-
-
-  const Item = ({ item ,checked,setChecked}) => {
-    // console.log('here is item Key unique : ',item.item)
-    return (
-      <View key={item.item}  style={styles.item}>
-        <View style={styles.section}>
-          <Checkbox
-          key={item.item}
-            style={styles.checkbox}
-            value={checked}
-            onValueChange={setChecked}
-            color={checked ? '#4630EB' : undefined}
-          />
-        </View>
-        <View style={{ justifyContent: 'center', marginLeft: wp('2%') }}>
   
-          <Text style={styles.title}>{item?.value?.patient_id}</Text>
-          <Text style={styles.title}>{item?.value?.patient.Fname}</Text>
-          <Text style={styles.title}>{item?.value.patient.Lname}</Text>
-     
-        </View>
-      </View>
-    );
+
   
-  }
   return (
     <>
       <View style={styles.buttonContainer}>
@@ -263,20 +218,15 @@ const dataArray = Object.keys(data).map(item => ({item,value:data[item]}))
           ListFooterComponent={onLoading && !refreshing ? <ActivityIndicator size="large" /> : null}
           onRefresh={onRefresh}
           refreshing={refreshing}
-          renderItem={({ item }) => <Item  checked={checkedItems[item.id] || false} setChecked={() => handleCheckboxChange(item)} item={item} />}
+          renderItem={({ item }) => <Item   item={item} />}
           keyExtractor={item => item.item}
         />
       </View> : <View style={styles.FlatlistContainer}>
-        {/* <FlatList
-          data={checkedArray ? checkedArray : null}
-          // onEndReachedThreshold={1}
-          // onEndReached={handleEndReach}
-          // ListFooterComponent={onLoading && !refreshing ? <ActivityIndicator size="large" /> : null}
-          // onRefresh={onRefresh}
-          // refreshing={refreshing}
-          renderItem={({ item }) => <Item checked={checked} setChecked={() => { setChecked(!checked) }} item={item} />}
+        <FlatList
+          data={ null}
+          renderItem={({ item }) => <Item  item={item} />}
           keyExtractor={item => item.item}
-        /> */}
+        />
     
       </View> }
       

@@ -29,10 +29,7 @@ const TaskTwo = () => {
   const error = useSelector(selectGalleryError);
 
   const [galleryImages, setGalleryImages] = useState();
-  // const count = useSelector((state) => state.counter);
   const visitUser = useSelector(userVisitData);
-  // const visitUserStatus = useSelector(userStatus)
-  // console.log('visit user list : ',visitUser.patient)
 
   console.log("These are images from gallery I recieved : : ", images);
   const dispatch = useDispatch();
@@ -44,11 +41,18 @@ const TaskTwo = () => {
     setGalleryImages(images);
   }, [images]);
 
-  const Item = ({item}) => {
+  const Item = ({ item }) => {
     return (
       <>
         <View style={styles.item}>
-          <View style={{flex:1, justifyContent: 'space-evenly', flexDirection:'row',alignItems:'center', }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "space-evenly",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
             <Text style={styles.title}>Malik</Text>
             <Image
               source={{
@@ -69,7 +73,6 @@ const TaskTwo = () => {
       >
         <Text style={{ color: "white", textAlign: "center" }}>get Images </Text>
       </TouchableOpacity>
-
       <View style={styles.FlatlistContainer}>
         <FlatList
           data={galleryImages}
@@ -97,8 +100,8 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 130,
-    borderRadius:10,
-    marginLeft:50,
+    borderRadius: 10,
+    marginLeft: 50,
   },
   buttonContainer: {
     flexDirection: "row",
