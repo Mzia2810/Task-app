@@ -45,8 +45,8 @@ const ImageHandler = () => {
   const resizeImage = async ({item,Size}) => {
     try {
       const [width, height] = Size.split('x').map(Number);
-      console.log('width   :  ===  : ',width)
-      console.log('height   :  ===  : ',height)
+      // console.log('width   :  ===  : ',width)
+      // console.log('height   :  ===  : ',height)
       const manipuleImage = await ImageManipulator.manipulateAsync(
         item.item.uri,
         [{ resize: { width: width, height: height } }],
