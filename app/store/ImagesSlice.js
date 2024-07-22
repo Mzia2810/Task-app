@@ -8,14 +8,10 @@ const ImageGallerySlice  = createSlice({
     },
     reducers:{
         addImagesInRedux:(state,action) =>{
-            // console.log('State is of Images : ',state)
             state.images = action.payload;
         },
         updateImageResize:(state,action) =>{
             const {id,width,height,uri} = action.payload.item;
-            console.log("width in Redux : ",width)
-            console.log("height in Redux : ",height)
-            console.log("uri in Redux : ",uri)
             const index = state.images.findIndex(img => img.id === id) 
             if(index !== -1){
                 state.images[index] = {

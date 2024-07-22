@@ -9,11 +9,10 @@ import {
 } from "react-native";
 import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
-import React, { useEffect, useState } from "react";
+import * as FileSystem from 'expo-file-system';
+  import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addImagesInRedux, updateImageResize } from "../store/ImagesSlice";
-import Item from "./component/Item";
-import { blue } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 const ImageHandler = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,15 +30,43 @@ const ImageHandler = () => {
       } else {
         console.log("Premission Granted ! ");
       }
-
       const media = await MediaLibrary.getAssetsAsync({
         mediaType: "photo",
         first: 10,
       });
-
       dispatch(addImagesInRedux(media.assets));
     })();
   }, []);
+
+  const saveImageToGallery = async(uri) =>{
+    try {
+      console.log("here is my image uri : ",uri)
+      const {status} = await MediaLibrary.requestPermissionsAsync();
+      if(status == 'granted'){
+        console.log('premission to save is granded')
+      }else{
+        console.log('premission failed ')
+      }
+      const fileName = uri.split('/').pop();
+      console.log('file name of Image : ',fileName)
+
+      const newPath = `${FileSystem.cacheDirectory}${fileName}`;
+      console.log('new path is availaable : ',newPath)
+       await FileSystem.copyAsync({
+        from:uri,
+        to:newPath, 
+       })
+
+       const  asset = await MediaLibrary.createAssetAsync(newPath);
+       await MediaLibrary.createAlbumAsync('download',asset,false);
+       console.log(' Image is saved to media laibrary :   ',asset)
+
+      
+    } catch (error) {
+      console.error('Image is not saved getting error ')
+    }
+
+  }
 
   const resizeImage = async ({item,Size}) => {
     try {
@@ -51,11 +78,10 @@ const ImageHandler = () => {
       );
       const updateImageSize = { ...item, uri: manipuleImage.uri };
       dispatch(updateImageResize(updateImageSize));
+      await saveImageToGallery(manipuleImage.uri)
     } catch (error) {
       console.error('Error resizing image:', error);
     }
-   
-
   };
 
 
