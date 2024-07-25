@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import gallerySlice from "./gallerySlice";
 import ImagesSlice from "./ImagesSlice";
+import EventSlice from "./EventSlice";
 
 const persistConfig = {
     key: 'root',
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     visit: visitSlice,
     gallery:gallerySlice,
     images:ImagesSlice,
+    event:EventSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig,rootReducer)
@@ -29,6 +31,8 @@ const store = configureStore({
             ignoreActions:['persist/PERSIST', 'persist/REHYDRATE'],
             serializableCheck:false,
         },
+        immutableCheck: false, // Disable the ImmutableStateInvariantMiddleware
+     
     }),
 
 });

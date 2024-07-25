@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ReactNativeTasks",
+    "plugins": [],
     "slug": "ReactNativeTasks",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,13 +13,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.ReactNativeTasks"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.ReactNativeTasks"
     },
     "web": {
       "favicon": "./assets/favicon.png"

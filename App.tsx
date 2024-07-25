@@ -10,7 +10,7 @@ import DrawerScreen from "./app/navigations/Drawer";
 import { persistor } from "./app/store/store";
 import store from "./app/store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 export default function App() {
   
